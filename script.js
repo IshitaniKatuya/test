@@ -1,37 +1,34 @@
-async function main () {
-    try {
-      const video = document.querySelector('#video') // <1>
-      const button = document.querySelector('#button')
-      const image = document.querySelector('#image')
-  
-      const stream = await navigator.mediaDevices.getUserMedia({ // <2>
-        video: {
-          facingMode: 'environment',
-          // facingMode: 'environment',
+async function main() {
+    // バーコードリーダーイニシャル
+    Quagga.init({
+        locate: true,
+        inputStream: {
+            name: "Live",
+            type: "LiveStream",
+            constraints: {
+                width: 640,
+                height: 480,
+            },
+            target: document.querySelector('#barcode-scanner'),
         },
-        audio: false,
-      })
-  
-      video.srcObject = stream // <3>
-  
-      const [track] = stream.getVideoTracks()
-      const settings = track.getSettings()
-      const {width, height} = settings // <4>
-  
-      button.addEventListener('click', event => { // <5>
-        const canvas = document.createElement('canvas') // <6>
-        canvas.setAttribute('width', width)
-        canvas.setAttribute('height', height)
-  
-        const context = canvas.getContext('2d')
-        context.drawImage(video, 0, 0, width, height) // <7>
-  
-        const dataUrl = canvas.toDataURL('image/jpeg') // <8>
-        image.setAttribute('src', dataUrl) // <9>
-      })
-    } catch (err) {
-      console.error(err)
-    }
-  }
-  
-  main()
+        decoder: {
+            readers: ["ean_reader", "ean_8_reader"],
+            multiple: false
+        },
+        locator: {
+            halfSample: false,
+            patchSize: "medium"
+        }
+    }, function (err) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+
+        //バーコードをスキャンできた際のイベント
+        Quagga.onDetected((data) => { alert(data.codeResult.code) });
+
+        Quagga.start();
+    });
+}
+main()
