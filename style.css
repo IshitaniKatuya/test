@@ -3,6 +3,10 @@
     height: 2%;
 }
 #barcode-scanner > canvas {
-    position: absolute;
     left: 0px; top: 0px;
 }
+#barcode-scanner > video {
+    object-fit:cover;
+}
+
+
