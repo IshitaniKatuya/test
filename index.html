@@ -1,17 +1,38 @@
+async function main() {
+  // バーコードリーダーイニシャル
+  Quagga.init({
+      locate: true,
+      inputStream: {
+          name: "Live",
+          type: "LiveStream",
+          constraints: {
+              width: 640,
+              height: 100,
+          },
+          target: document.querySelector('#barcode-scanner'),
+      },
+      decoder: {
+          readers: ["ean_reader", "ean_8_reader"],
+          multiple: false
+      },
+      locator: {
+          halfSample: false,
+          patchSize: "medium"
+      }
+  }, function (err) {
+      if (err) {
+          console.log(err);
+          return;
+      }
 
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScriptで写真を撮影する方法</title>
-  </head>
-  <body>
-    <div id="barcode-scanner">
-    </div>
-    <p id="barcode">
-    </p>
-  </body>
-  <script src="https://unpkg.com/@ericblade/quagga2@1.7.4/dist/quagga.min.js"></script>
-  <script src="script.js"></script>
-</html>
+      //バーコードをスキャンできた際のイベント
+      Quagga.onDetected((data) => { 
+        
+        var elem = document.getElementById("barcode");
+        elem.textContent = data.codeResult.code;
+      });
+
+      Quagga.start();
+  });
+}
+main()
