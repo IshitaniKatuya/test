@@ -6,8 +6,7 @@ async function main() {
           name: "Live",
           type: "LiveStream",
           constraints: {
-              width: 400,
-              height: 400,
+            facingMode: "environment",
           },
           target: document.querySelector('#barcode-scanner'),
       },
