@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="ja">
   <head>
@@ -7,12 +8,21 @@
     <title>JavaScriptで写真を撮影する方法</title>
   </head>
   <body>
-    <div id="barcode-scanner">
-    </div>
-    <p id="barcode">
-    </p>
+    <div><canvas id="preview"></canvas></div>
+    <textarea id="jan" rows="8" cols="40"></textarea>
+ 	  <div>Test</div>
+    <!-- <h1>jsQR Demo</h1>
+    <a id="githubLink" href="https://github.com/cozmo/jsQR">View documentation on Github</a>
+    <p>Pure JavaScript QR code decoding library.</p>
+    <div id="loadingMessage">🎥 Unable to access video stream (please make sure you have a webcam enabled)</div>
+    <canvas id="canvas" hidden></canvas> -->
+    <!-- <div id="output" hidden> -->
+    <div id="outputMessage">No QR code detected.</div>
+    <div hidden><b>Data:</b> <span id="outputData"></span></div>
+    <!-- </div> -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    <script src="https://unpkg.com/@ericblade/quagga2@1.7.4/dist/quagga.min.js"></script>
+    <script src="script.js"></script>
   </body>
   <link rel="stylesheet" href="style.css">
-  <script src="https://unpkg.com/@ericblade/quagga2@1.7.4/dist/quagga.min.js"></script>
-  <script src="script.js"></script>
 </html>
